@@ -22,9 +22,15 @@ namespace seleniumTest
             _driver.Navigate().GoToUrl("https://www.saucedemo.com/");
             var LoginButtonLocator = By.ClassName("login-button");
             var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            wait.Until(
-                ExpectedConditions.ElementIsVisible(LoginButtonLocator))
+            wait.Until(ExpectedConditions.ElementIsVisible(LoginButtonLocator));
 
+            //created new variables to target the part of the element that we targeting
+            var userNameField = _driver.FindElement(By.Id("user-name"));
+            var passwordField = _driver.FindElement(By.Id("password"));
+            var loginButton = _driver.FindElement(LoginButtonLocator);
+
+
+                
         }
         [TestCleanup]
         public void CleanUp()
