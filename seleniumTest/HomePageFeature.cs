@@ -14,23 +14,27 @@ namespace seleniumTest
     {
         IWebDriver _driver;
         [TestMethod]
-        public void MustBeAbleToLogin()
+        public void ShouldBeAbleToLogin()
         {
             var outPutDirectory =
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-             _driver = new ChromeDriver(outPutDirectory);
+            _driver = new ChromeDriver(outPutDirectory);
             _driver.Navigate().GoToUrl("https://www.saucedemo.com/");
-            var LoginButtonLocator = By.ClassName("login-button");
-            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementIsVisible(LoginButtonLocator));
 
-            //created new variables to target the part of the element that we targeting
+            var loginButtonLocator = _driver.FindElement(By.Id("login-button"));
+            //var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            //wait.Until(
+            //    ExpectedConditions.ElementIsVisible((By)loginButtonLocator));
+
             var userNameField = _driver.FindElement(By.Id("user-name"));
             var passwordField = _driver.FindElement(By.Id("password"));
-            var loginButton = _driver.FindElement(LoginButtonLocator);
+            //var loginButton = _driver.FindElement(By.Id(loginButtonLocator);
 
-           //I dont know what's going on
-                
+            userNameField.SendKeys("standard_user");
+            passwordField.SendKeys("secret_sauce");
+            loginButtonLocator.Click();
+
+            Assert.IsTrue(_driver.Url.Contains("inventorys.html"));
         }
         [TestCleanup]
         public void CleanUp()
